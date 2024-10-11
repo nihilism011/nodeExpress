@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .rows {
+    }
+  </style>
+  <body>
+    <h2>제출 완료</h2>
+    <div>제출 내용</div>
+    <div
+      style="
+        margin: 0 auto;
+        width: 300px;
+        border: 2px solid blue;
+        border-radius: 6px;
+        display: flex;
+        flex-direction: column;
+      "
+    >
+      <div class="rows">유저 아이디 : <%= userId %></div>
+      <div class="rows">유저 이름 : <%= userName %></div>
+      <div class="rows">내용 : <%= contents %></div>
+    </div>
+  </body>
+</html>

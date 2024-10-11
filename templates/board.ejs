@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    form {
+      width: 600px;
+      margin: 0 auto;
+      padding: 10px 20px;
+    }
+    .submitForm {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .rows {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      label {
+        height: 30px;
+        width: 25%;
+      }
+      input {
+        height: 30px;
+        width: 50%;
+      }
+    }
+    button {
+      margin-top: 15px;
+      height: 40px;
+      width: 50%;
+    }
+  </style>
+  <body>
+    <div>test!</div>
+    <%= message %>
+    <ul>
+      <% for(user of list){ %>
+      <li>
+        번호 : <%= user.id %> 이름 : <%= user.name %> 나이 : <%= user.age %>
+      </li>
+      <% }; %>
+    </ul>
+    <form action="/test/sub" method="POST">
+      <div class="submitForm">
+        <div class="rows">
+          <label for="userId">아이디</label>
+          <input id="userId" type="text" name="userId" />
+        </div>
+        <div class="rows">
+          <label for="userName">이름</label>
+          <input id="userName" type="text" name="userName" />
+        </div>
+        <div class="rows">
+          <label for="contents">내용</label>
+          <input id="contents" type="text" name="contents" />
+        </div>
+      </div>
+      <div class="rows">
+        <button type="submit">제출</button>
+      </div>
+    </form>
+  </body>
+</html>
