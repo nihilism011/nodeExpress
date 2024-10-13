@@ -1,4 +1,6 @@
-const testApp = (app, connect, router) => {
+import connect from "../connecter.js";
+
+const testApp = (app, router) => {
   // app.get("/test", async (req, res) => {
   //   const response = await connect("test", "insertName", { name: "kim" });
   //   console.log(response);
