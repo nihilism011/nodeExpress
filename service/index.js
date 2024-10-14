@@ -1,8 +1,8 @@
-import userApp from "./user.js";
-import testApp from "./test.js";
+import userRouter from "./user.js";
+import testRouter from "./test.js";
 
 const service = {
-  userApp,
-  testApp,
+  userRouter,
+  testRouter,
 };
 export default service;

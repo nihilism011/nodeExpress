@@ -1,32 +1,23 @@
-import connect from "../connecter.js";
-
-const testApp = (app, router) => {
-  // app.get("/test", async (req, res) => {
-  //   const response = await connect("test", "insertName", { name: "kim" });
-  //   console.log(response);
-  //   res.json({ name: "getTest" });
-  // });
-  router.route("/test/sub").post((req, res) => {
-    const data = req.body;
-    console.error(req.body);
-    res.render("submitEnd", data);
+import express from "express";
+const router = express.Router();
+import DbConnecter from "../DbConnecter.js";
+// localhost:3001/test/
+DbConnecter.init("testMapper.xml", "test");
+const conn = DbConnecter.connection;
+router
+  .route("/:id")
+  .get(async (req, res) => {
+    const { data } = await conn("getItem", { id: req.params.id });
+    res.json(data);
+  })
+  .patch(async (req, res) => {
+    const { id, name } = req.body;
+    const params = {
+      id: id,
+      name: name,
+    };
+    const { status } = await conn("updateTestUser", params);
+    res.json(status);
   });
-  router
-    .route("/test/:id")
-    .get(async (req, res) => {
-      const message = `${req.method}방식, url = ${req.url}`;
-      const response = await connect("test", "findAll", {});
-      console.log(response);
-      res.json({ message: message });
-    })
-    .post(async (req, res) => {
-      const response = await connect("test", "insertName", {
-        name: req.params.id,
-      });
-      res.json(response);
-    })
-    .put((req, res) => {})
-    .patch((req, res) => {})
-    .delete((req, res) => {});
-};
-export default testApp;
+
+export default router;
