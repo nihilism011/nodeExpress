@@ -15,7 +15,6 @@ let nameSpace;
 function init(mybatisPath, ns) {
   const projectPath = process.cwd();
   const absolutePath = path.resolve(projectPath, "mybatisMapper", mybatisPath);
-  // console.log(absolutePath);
   mybatisMapper.createMapper([absolutePath]);
   nameSpace = ns;
 }
