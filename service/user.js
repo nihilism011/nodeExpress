@@ -2,14 +2,18 @@ import express from "express";
 const router = express.Router();
 import DbConnecter from "../DbConnecter.js";
 // localhost:3001/user/
-DbConnecter.init("userMapper.xml", "user");
-const conn = DbConnecter.connection;
+const conn = DbConnecter;
+router.route("/signup/submit").post(async (req, res) => {
+  console.log(req.body);
+});
 router
-  .route("/user/:id")
+  .route("/selectUser/:id")
   .get(async (req, res) => {
-    const id = req.params.id;
-    const { data } = await conn("findUser", { id: id });
+    const { data } = await conn("user", "findUser", { id: req.params.id });
     res.json(data);
+  })
+  .put(async (req, res) => {
+    const { status } = await conn("user", "", { id: req.params.id });
   })
   .patch(async (req, res) => {
     const id = req.params.id;
@@ -22,7 +26,7 @@ router
       email: email ?? null,
       gender: gender ?? null,
     };
-    const { data } = await conn("updateUser", form);
+    const { data } = await conn("user", "updateUser", form);
     console.log(data);
     res.json(data);
   })

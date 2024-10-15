@@ -4,6 +4,7 @@ import service from "./service/index.js";
 const router = express.Router();
 const app = express();
 
+//ejs 연습했던 흔적 지우지는 않겠음.
 app.set("view engine", "ejs");
 app.set("views", "./templates");
 

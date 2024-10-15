@@ -2,12 +2,11 @@ import express from "express";
 const router = express.Router();
 import DbConnecter from "../DbConnecter.js";
 // localhost:3001/test/
-DbConnecter.init("testMapper.xml", "test");
-const conn = DbConnecter.connection;
+const conn = DbConnecter;
 router
   .route("/:id")
   .get(async (req, res) => {
-    const { data } = await conn("getItem", { id: req.params.id });
+    const { data } = await conn("test", "getItem", { id: req.params.id });
     res.json(data);
   })
   .patch(async (req, res) => {
@@ -16,7 +15,7 @@ router
       id: id,
       name: name,
     };
-    const { status } = await conn("updateTestUser", params);
+    const { status } = await conn("test", "updateTestUser", params);
     res.json(status);
   });
 

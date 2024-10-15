@@ -3,26 +3,32 @@ import mysql from "mysql2/promise";
 import config from "./dbConfig.js";
 import color from "ansi-colors";
 import path from "path";
+import fs from "fs/promises";
 
-let nameSpace;
+const projectPath = process.cwd();
+const mybatisPath = path.resolve(projectPath, "mybatisMapper");
+async function loadMappers() {
+  try {
+    const files = await fs.readdir(mybatisPath); // 비동기적으로 파일 목록을 읽어옴
+    const mapperArray = files.map(
+      (file) => path.resolve(mybatisPath, file) // 절대 경로 생성
+    );
 
-/**
- * connection의 설정을 초기화
- *
- * @param {String} mybatisPath mapper의 경로
- * @param {String} ns mapper의 nameSpace
- */
-function init(mybatisPath, ns) {
-  const projectPath = process.cwd();
-  const absolutePath = path.resolve(projectPath, "mybatisMapper", mybatisPath);
-  mybatisMapper.createMapper([absolutePath]);
-  nameSpace = ns;
+    mybatisMapper.createMapper(mapperArray);
+  } catch (err) {
+    console.error("Error reading directory:", err);
+  }
 }
-async function connection(queryName, param) {
+
+loadMappers();
+
+async function connection(nameSpace, queryName, param) {
   const connect = await mysql.createConnection(config);
   const mapperFormat = { language: "sql", indent: "  " };
   let query;
   try {
+    //로그
+    console.log(nameSpace, queryName, param);
     query = mybatisMapper.getStatement(
       nameSpace,
       queryName,
@@ -34,11 +40,11 @@ async function connection(queryName, param) {
     console.error("--error--error--mybatis--error--error--error--");
     console.log(err);
     console.error("--error--error--mybatis--error--error--error--");
+    return { status: false, data: err };
   }
   let result;
   try {
-    const response = await connect.query(query);
-    const data = response[0];
+    const [data, fields] = await connect.query(query);
     result = { status: true, data: data };
   } catch (err) {
     console.error("--error--error--error--db--error--error--error--");
@@ -49,4 +55,4 @@ async function connection(queryName, param) {
   connect.end();
   return result;
 }
-export default { init, connection };
+export default connection;
