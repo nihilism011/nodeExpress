@@ -3,6 +3,11 @@ const router = express.Router();
 import DbConnecter from "../DbConnecter.js";
 // localhost:3001/user/
 const conn = DbConnecter;
+router.route("/idCheck").get(async (req, res) => {
+  const { id } = req.query;
+  const { data } = await conn("user", "idCheck", { userId: id ?? null });
+  res.json(data[0].cnt === 0 ? true : false);
+});
 router.route("/signup/submit").post(async (req, res) => {
   console.log(req.body);
 });

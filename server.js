@@ -13,9 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(router);
 
-// service.testApp(app, router);
-// service.userApp(app, router);
 app.use("/test", service.testRouter);
 app.use("/user", service.userRouter);
 
-app.listen(3001);
+app.listen(8080);
