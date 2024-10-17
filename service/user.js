@@ -9,7 +9,8 @@ router.route("/idCheck").get(async (req, res) => {
   res.json(data[0].cnt === 0 ? true : false);
 });
 router.route("/signup/submit").post(async (req, res) => {
-  console.log(req.body);
+  const { status } = await conn("user", "insertUser", req.body);
+  res.json(status);
 });
 router
   .route("/selectUser/:id")
