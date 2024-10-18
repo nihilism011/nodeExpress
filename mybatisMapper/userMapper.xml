@@ -20,6 +20,11 @@
     into user(userId,userName,password,email,gender,status)
     values (#{userId},#{userName},#{password},#{email},#{gender},'C')
   </select>
+  <select id="login">
+    select id, userName
+    from user
+    where userId = #{userId} and password = #{password}
+  </select>
   <update id="updateUser" parameterType="map">
     update user
     <set>

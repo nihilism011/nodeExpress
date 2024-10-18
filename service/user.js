@@ -1,8 +1,21 @@
 import express from "express";
 const router = express.Router();
 import DbConnecter from "../DbConnecter.js";
-// localhost:3001/user/
+// localhost:8080/user/
 const conn = DbConnecter;
+router.route("/login").post(async (req, res) => {
+  const { inputId, inputPwd } = req.body;
+  const { data } = await conn("user", "login", {
+    userId: inputId,
+    password: inputPwd,
+  });
+  console.log(data);
+  if (data.length === 0) {
+    res.json({ state: false });
+  } else {
+    res.json({ state: true, id: data[0].id, userName: data[0].userName });
+  }
+});
 router.route("/idCheck").get(async (req, res) => {
   const { id } = req.query;
   const { data } = await conn("user", "idCheck", { userId: id ?? null });
