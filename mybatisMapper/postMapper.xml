@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="post">  
+  <select id="findAll">
+    select p.*,i.imageId,i.imageName,u.userId,u.userName,u.profileImg,
+				ifnull(l.likeCnt,0) likeCnt,ifnull(c.commentCnt,0) commentCnt
+    from post p
+    left join post_img i on p.postId = i.postId
+    inner join user u on u.id = p.userId
+    left join (
+      select postId, count(*) likeCnt
+      from post_like
+      group by postId
+    ) l on p.postId = l.postId
+    left join (
+      select postId, count(*) CommentCnt
+      from comment
+      group by postId
+    ) c on c.postId = p.postId
+    <where>
+        <if test="lastId != null">
+        and p.postId &lt; #{lastId}
+        </if>
+    </where>
+    order by postId desc
+    limit 5
+  </select>
+  <update id="updateTestUser">
+    update testTable
+    set name = #{name}
+    where id = #{id}
+  </update>
+  
+</mapper>

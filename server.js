@@ -15,5 +15,6 @@ app.use(router);
 
 app.use("/test", service.testRouter);
 app.use("/user", service.userRouter);
+app.use("/post", service.postRouter);
 
 app.listen(8080);
