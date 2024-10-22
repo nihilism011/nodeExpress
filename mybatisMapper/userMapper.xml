@@ -21,9 +21,9 @@
     values (#{userId},#{userName},#{password},#{email},#{gender},'C')
   </select>
   <select id="login">
-    select id, userName
+    select id, userName, password
     from user
-    where userId = #{userId} and password = #{password}
+    where userId = #{userId}
   </select>
   <update id="updateUser" parameterType="map">
     update user

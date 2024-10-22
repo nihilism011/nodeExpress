@@ -1,19 +1,38 @@
 import express from "express";
 const router = express.Router();
 import DbConnecter from "../DbConnecter.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+
 // localhost:8080/user/
+const saltRounds = 10;
+const JWT_KEY = "secret_key";
 const conn = DbConnecter;
 router.route("/login").post(async (req, res) => {
   const { inputId, inputPwd } = req.body;
   const { data } = await conn("user", "login", {
     userId: inputId,
-    password: inputPwd,
   });
-  console.log(data);
   if (data.length === 0) {
-    res.json({ state: false });
+    return res.json({ state: false, reason: "id" });
+  }
+  const dbPwd = data[0].password;
+  const result = await bcrypt.compare(inputPwd, dbPwd);
+  if (!result) {
+    res.json({ state: false, reason: "pwd" });
   } else {
-    res.json({ state: true, id: data[0].id, userName: data[0].userName });
+    const token = jwt.sign(
+      { id: data[0].id, userName: data[0].userName },
+      JWT_KEY,
+      { expiresIn: "1h" }
+    );
+    console.log(token);
+    res.json({
+      state: true,
+      id: data[0].id,
+      userName: data[0].userName,
+      token,
+    });
   }
 });
 router.route("/idCheck").get(async (req, res) => {
@@ -21,10 +40,14 @@ router.route("/idCheck").get(async (req, res) => {
   const { data } = await conn("user", "idCheck", { userId: id ?? null });
   res.json(data[0].cnt === 0 ? true : false);
 });
+
 router.route("/signup/submit").post(async (req, res) => {
-  const { status } = await conn("user", "insertUser", req.body);
+  const userSubmit = req.body;
+  userSubmit.password = await bcrypt.hash(userSubmit.password, saltRounds);
+  const { status } = await conn("user", "insertUser", userSubmit);
   res.json(status);
 });
+
 router
   .route("/selectUser/:id")
   .get(async (req, res) => {

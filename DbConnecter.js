@@ -28,7 +28,14 @@ async function connection(nameSpace, queryName, param) {
   let query;
   try {
     //로그
-    console.log(nameSpace, queryName, param);
+    console.log(
+      color.greenBright("mapperName : "),
+      nameSpace,
+      color.greenBright("/ queryName : "),
+      queryName,
+      color.greenBright("/ param : "),
+      param
+    );
     query = mybatisMapper.getStatement(
       nameSpace,
       queryName,

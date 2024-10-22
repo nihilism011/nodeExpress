@@ -1,8 +1,14 @@
 import express from "express";
 const router = express.Router();
 import DbConnecter from "../DbConnecter.js";
-// localhost:3001/test/
+import { jwtAuthentication } from "../jwtAuth.js";
+// localhost:8080/test/
 const conn = DbConnecter;
+router.route("/tokenTest").get(jwtAuthentication, async (req, res) => {
+  // console.log(req.query);
+  // console.log(req.body);
+  res.json(true);
+});
 router
   .route("/:id")
   .get(async (req, res) => {
