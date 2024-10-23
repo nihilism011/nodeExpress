@@ -3,17 +3,18 @@ const router = express.Router();
 import DbConnecter from "../DbConnecter.js";
 // localhost:8080/post/
 const conn = DbConnecter;
-router.route("/:key").get(async (req, res) => {
-  if (req.params.key == "all") {
-    const { lastId = null } = req.query;
-    const { data } = await conn("post", "findAll", { lastId: lastId });
-    console.log(data);
-    res.json(data);
-    console.log("모두");
-  } else {
-    console.log(req.params.key);
-    res.json(req.params.key);
-  }
+router.route("/addPost").get(async (req, res) => {
+  const { lastId = null } = req.query;
+  const { data } = await conn("post", "addPost", { lastId: lastId });
+  const idList = data.map((item) => item.postId);
+  const image = await conn("post", "slideImg", { idList: idList });
+  const addList = data.map((item) => {
+    const imgNames = image.data
+      .filter((d) => d.id === item.id)
+      .map((d) => d.imgName);
+    return { ...item, imgName: imgNames };
+  });
+  res.json(addList);
 });
 
 export default router;

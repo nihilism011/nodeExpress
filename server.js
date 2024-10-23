@@ -16,5 +16,6 @@ app.use(router);
 app.use("/test", service.testRouter);
 app.use("/user", service.userRouter);
 app.use("/post", service.postRouter);
-
+app.use("/static", express.static("upload"));
+app.use("/profile", express.static("profileImg"));
 app.listen(8080);

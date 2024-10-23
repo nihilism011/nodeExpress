@@ -7,9 +7,22 @@
     where userId = #{userId}
   </select>
   <select id="findUser">
-    select *
-    from user
-    where id = #{id}
+    select u.*,l.iLike,l.likeMe,p.postCnt
+    from user u
+    inner join (
+      SELECT #{id} AS userId, 
+      COUNT(CASE WHEN from_userId = #{id} THEN 1 END) AS iLike, 
+      COUNT(CASE WHEN to_userId = #{id} THEN 1 END) AS likeMe
+      FROM user_like
+      WHERE from_userId = #{id} OR to_userId = #{id}
+      ) as l on l.userId = #{id}
+    inner join (
+      select #{id} as userId, count(*) as postCnt
+      from post
+      where userId = #{id}
+      ) as p on p.userId = #{id}
+    where u.id = #{id}
+
   </select>
   <select id="findAll">
     select *
