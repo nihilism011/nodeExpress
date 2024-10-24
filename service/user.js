@@ -52,7 +52,7 @@ router
   .route("/selectUser/:id")
   .get(async (req, res) => {
     const { data } = await conn("user", "findUser", { id: req.params.id });
-    res.json(data);
+    res.json(data[0]);
   })
   .put(async (req, res) => {
     const { status } = await conn("user", "", { id: req.params.id });
