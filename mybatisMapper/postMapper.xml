@@ -25,13 +25,23 @@
     limit 5
   </select>
   <select id="slideImg">
-    select imageName
+    select postId,imageName
     from post_img
     where postId in
     <foreach item="id" collection="idList" open="(" separator="," close=")">
         #{id}
     </foreach>
-    order by postId desc
+    order by postId desc,imageId asc
   </select>
+  <insert id="insertPost">
+    insert
+    into post(userId,content)
+    values (#{userId},#{content})
+  </insert>
+  <insert id="imgUpload">
+    insert
+    into post_img(postId,imageName)
+    values (#{postId},#{imageName})
+  </insert>
   
 </mapper>

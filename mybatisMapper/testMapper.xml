@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="test">  
+<mapper namespace="test"> 
   <select id="getItem">
     select *
     from testTable
@@ -11,5 +11,10 @@
     set name = #{name}
     where id = #{id}
   </update>
+  <insert id="aiTest">
+    insert
+    into testTable(name)
+    values (#{name})
+  </insert>
   
 </mapper>

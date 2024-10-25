@@ -23,6 +23,12 @@ router
     };
     const { status } = await conn("test", "updateTestUser", params);
     res.json(status);
+  })
+  .post(async (req, res) => {
+    const id = req.params.id;
+    const asdf = { name: id };
+    const response = await conn("test", "aiTest", asdf);
+    res.json({ data: response, asdf: asdf });
   });
 
 export default router;
