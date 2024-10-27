@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="post">  
-  <select id="addPost">
+  <select id="lastFivePostToId">
     select p.*,u.id,u.userName,u.profileImg,
 				ifnull(l.likeCnt,0) likeCnt,ifnull(c.commentCnt,0) commentCnt
     from post p
@@ -24,7 +24,7 @@
     order by postId desc
     limit 5
   </select>
-  <select id="slideImg">
+  <select id="postImgToList">
     select postId,imageName
     from post_img
     where postId in

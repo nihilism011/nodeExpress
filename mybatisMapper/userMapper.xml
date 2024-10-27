@@ -6,7 +6,7 @@
     from user
     where userId = #{userId}
   </select>
-  <select id="findUser">
+  <select id="getUser">
     select u.*,l.iLike,l.likeMe,p.postCnt
     from user u
     inner join (

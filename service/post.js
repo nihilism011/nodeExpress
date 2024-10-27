@@ -1,8 +1,8 @@
 import express from "express";
 const router = express.Router();
 import DbConnecter from "../DbConnecter.js";
-import multer from "multer";
-const upload = multer({ dest: "uploads/" });
+import { imgUpload } from "../upload.js";
+// const upload = multer({ dest: "uploads/" });
 // localhost:8080/post/
 const conn = DbConnecter;
 router
@@ -20,7 +20,8 @@ router
     });
     res.json(addList);
   })
-  .post(upload.array("photos", 12), async (req, res) => {
+  .post(imgUpload.array("photos", 12), async (req, res) => {
+    // req.username;
     const fileNames = req.files.map((file) => file.filename);
     console.log(fileNames);
     console.log(req.body.userId, req.body.content);

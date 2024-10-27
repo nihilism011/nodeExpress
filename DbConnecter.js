@@ -9,11 +9,8 @@ const projectPath = process.cwd();
 const mybatisPath = path.resolve(projectPath, "mybatisMapper");
 async function loadMappers() {
   try {
-    const files = await fs.readdir(mybatisPath); // 비동기적으로 파일 목록을 읽어옴
-    const mapperArray = files.map(
-      (file) => path.resolve(mybatisPath, file) // 절대 경로 생성
-    );
-
+    const files = await fs.readdir(mybatisPath);
+    const mapperArray = files.map((file) => path.resolve(mybatisPath, file));
     mybatisMapper.createMapper(mapperArray);
   } catch (err) {
     console.error("Error reading directory:", err);
