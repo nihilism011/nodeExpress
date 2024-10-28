@@ -59,4 +59,9 @@
     </set>
     where id = #{id}
 </update>
+<update id="ProfileChange">
+  update user
+  set profileImg = #{profileImg}
+  where id = #{id}
+</update>
 </mapper>

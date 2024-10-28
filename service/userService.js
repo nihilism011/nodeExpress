@@ -6,3 +6,10 @@ export const getUser = async (req, res) => {
   console.log(data);
   res.json(data[0]);
 };
+export const profileChange = async (req, res) => {
+  const fileNames = req.files.map((file) => file.filename);
+  const { userId } = req.body;
+  const params = { profileImg: fileNames[0], id: userId };
+  const { status } = await connection("user", "ProfileChange", params);
+  res.json(status);
+};

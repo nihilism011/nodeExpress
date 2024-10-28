@@ -31,7 +31,7 @@ const profileStorage = multer.diskStorage({
   destination: "profileImg/",
   filename: function (req, file, cb) {
     const ext = getExt(file.originalname);
-    cb(null, `${req.profileId}.${ext}`);
+    cb(null, `${generateRandomString(12)}.${ext}`);
   },
 });
 

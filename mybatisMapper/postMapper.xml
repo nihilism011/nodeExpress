@@ -43,5 +43,16 @@
     into post_img(postId,imageName)
     values (#{postId},#{imageName})
   </insert>
+  <select id="getPosts">
+    SELECT p.postId, COALESCE(i.imageName, 'projectPostDefaultImage.jpg') AS imageName
+    FROM post p
+    LEFT JOIN post_img i ON p.postId = i.postId
+    WHERE p.userId = #{userId}
+    AND (i.imageId = (
+      SELECT MIN(imageId)
+      FROM post_img
+      WHERE postId = p.postId
+    ) OR i.imageId IS NULL);
+  </select>
   
 </mapper>

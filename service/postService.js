@@ -18,8 +18,6 @@ export const lastFivePostToId = async (req, res) => {
 export const insertPost = async (req, res) => {
   // req.username;
   const fileNames = req.files.map((file) => file.filename);
-  console.log(fileNames);
-  console.log(req.body.userId, req.body.content);
   const postRes = await connection("post", "insertPost", {
     userId: req.body.userId,
     content: req.body.content,
@@ -41,4 +39,11 @@ export const insertPost = async (req, res) => {
   } else {
     res.json(false);
   }
+};
+export const getPosts = async (req, res) => {
+  const { userId } = req.query;
+  const { data } = await connection("post", "getPosts", {
+    userId: userId,
+  });
+  res.json(data);
 };

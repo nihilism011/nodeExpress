@@ -10,6 +10,7 @@ export const jwtAuthentication = (req, res, next) => {
       return res.json({ err: "non valid" });
     }
     console.log(user);
+    req.loginUserId = user.id;
     next();
   });
 };
