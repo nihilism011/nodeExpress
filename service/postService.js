@@ -47,3 +47,11 @@ export const getPosts = async (req, res) => {
   });
   res.json(data);
 };
+export const getPostCnt = async (req, res) => {
+  const { postId } = req.query;
+  const likeCnt = await connection("post", "likeCnt", { postId: postId });
+  const commentCnt = await connection("post", "commentCnt", { postId: postId });
+  const result = { ...likeCnt.data[0], ...commentCnt.data[0] };
+  console.log(result);
+  res.json(result);
+};

@@ -54,5 +54,15 @@
       WHERE postId = p.postId
     ) OR i.imageId IS NULL);
   </select>
+  <select id="likeCnt">
+    select count(*) as likeCnt
+    from post_like
+    where postId = #{postId}
+  </select>
+  <select id="commentCnt">
+    select count(*) as commentCnt
+    from comment
+    where postId = #{postId}
+  </select>
   
 </mapper>

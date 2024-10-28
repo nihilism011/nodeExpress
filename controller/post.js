@@ -3,6 +3,7 @@ import {
   lastFivePostToId,
   insertPost,
   getPosts,
+  getPostCnt,
 } from "../service/postService.js";
 import { imgUpload } from "../upload.js";
 const router = express.Router();
@@ -10,4 +11,5 @@ const router = express.Router();
 router.route("/lastFivePostToId").get(lastFivePostToId);
 router.route("/").post(imgUpload.array("photos", 12), insertPost);
 router.route("/posts").get(getPosts);
+router.route("/cnt").get(getPostCnt);
 export default router;
