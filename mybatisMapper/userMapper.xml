@@ -64,4 +64,9 @@
   set profileImg = #{profileImg}
   where id = #{id}
 </update>
+<select id="getUserName">
+  select userName,profileImg
+  from user
+  where id = #{userId}
+  </select>
 </mapper>

@@ -64,5 +64,37 @@
     from comment
     where postId = #{postId}
   </select>
+  <select id="getFirstPost">
+  select postId
+  from post
+  order by postId
+  limit 1
+  </select>
+  <select id="getPostLike">
+  select count(*) cnt
+  from post_like
+  where postId = #{postId} and userId = #{userId}
+  </select>
+  <insert id="insertLike">
+  insert
+  into post_like(postId,userId)
+  values (#{postId},#{userId})
+  </insert>
+  <delete id="deleteLike">
+  delete
+  from post_like
+  where userId = #{userId} and postId = #{postId}
+  </delete>
+  <select id="getComment">
+  select userId,content
+  from comment
+  where postId = #{postId}
+  order by commentId
+  </select>
+  <insert id="insertComment">
+  insert
+  into comment(postId,userId,content)
+  values (#{postId},#{userId},#{content})
+  </insert>
   
 </mapper>

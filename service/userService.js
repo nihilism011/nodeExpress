@@ -13,3 +13,8 @@ export const profileChange = async (req, res) => {
   const { status } = await connection("user", "ProfileChange", params);
   res.json(status);
 };
+export const getUserName = async (req, res) => {
+  const { userId } = req.query;
+  const { data } = await connection("user", "getUserName", { userId: userId });
+  res.json(data[0]);
+};

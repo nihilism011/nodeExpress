@@ -1,5 +1,5 @@
 import express from "express";
-import { getUser, profileChange } from "../service/userService.js";
+import { getUser, getUserName, profileChange } from "../service/userService.js";
 import { profileUpload } from "../upload.js";
 const router = express.Router();
 
@@ -7,6 +7,7 @@ const router = express.Router();
 router
   .route("/profileChange")
   .post(profileUpload.array("profiles", 2), profileChange);
+router.route("/name").get(getUserName);
 router.route("/:id").get(getUser);
 
 export default router;

@@ -55,3 +55,50 @@ export const getPostCnt = async (req, res) => {
   console.log(result);
   res.json(result);
 };
+export const getFirstPost = async (req, res) => {
+  const { data } = await connection("post", "getFirstPost", {});
+  res.json(data[0].postId);
+};
+export const getPostLike = async (req, res) => {
+  const { postId } = req.query;
+  const userId = req.loginUserId;
+  const { data } = await connection("post", "getPostLike", {
+    postId: postId,
+    userId: userId,
+  });
+  res.json(data[0].cnt != 0);
+};
+export const postLike = async (req, res) => {
+  const { isLike, postId } = req.body;
+  const userId = req.loginUserId;
+  if (isLike) {
+    const { status } = await connection("post", "deleteLike", {
+      postId: postId,
+      userId: userId,
+    });
+    res.json(status);
+  } else {
+    const { status } = await connection("post", "insertLike", {
+      postId: postId,
+      userId: userId,
+    });
+    res.json(status);
+  }
+};
+export const getComment = async (req, res) => {
+  const { postId } = req.query;
+  const { data } = await connection("post", "getComment", { postId: postId });
+  res.json(data);
+};
+export const insertComment = async (req, res) => {
+  const { postId, content } = req.body;
+  const userId = req.loginUserId;
+  const params = {
+    postId: postId,
+    content: content,
+    userId: userId,
+  };
+  const { status } = await connection("post", "insertComment", params);
+  console.log(params);
+  res.json(status);
+};
