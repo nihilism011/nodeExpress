@@ -96,5 +96,14 @@
   into comment(postId,userId,content)
   values (#{postId},#{userId},#{content})
   </insert>
-  
+  <select id="getCommentCnt">
+  select count(*) as cnt
+  from comment
+  where postId = #{postId}
+  </select>
+  <select id="getLikeCnt">
+  select count(*) as cnt
+  from post_like
+  where postId = #{postId}
+  </select>
 </mapper>

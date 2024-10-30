@@ -9,6 +9,8 @@ import {
   postLike,
   getComment,
   insertComment,
+  getCommentCnt,
+  getLikeCnt,
 } from "../service/postService.js";
 import { imgUpload } from "../upload.js";
 const router = express.Router();
@@ -20,4 +22,6 @@ router.route("/cnt").get(getPostCnt);
 router.route("/firstPost").get(getFirstPost);
 router.route("/postLike").get(getPostLike).post(postLike);
 router.route("/comment").get(getComment).post(insertComment);
+router.route("/commentCnt").get(getCommentCnt);
+router.route("/getLikeCnt").get(getLikeCnt);
 export default router;

@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 
 export const idCheck = async (req, res) => {
   const { id } = req.query;
-  const { data } = await connection("user", "idCheck", { userId: id });
+  const { data } = await connection("user", "idCheck", { userId: id ?? "" });
   res.json(data[0].cnt === 0);
 };
 export const signup = async (req, res) => {
@@ -14,7 +14,7 @@ export const signup = async (req, res) => {
     userSubmit.password,
     parseInt(process.env.saltRounds)
   );
-  const { status } = await connection("user", "insertUser", userSubmit);
+  const { data, status } = await connection("user", "insertUser", userSubmit);
   res.json(status);
 };
 export const login = async (req, res) => {

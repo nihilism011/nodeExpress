@@ -102,3 +102,17 @@ export const insertComment = async (req, res) => {
   console.log(params);
   res.json(status);
 };
+export const getCommentCnt = async (req, res) => {
+  const { postId } = req.query;
+  const { data } = await connection("post", "getCommentCnt", {
+    postId: postId,
+  });
+  res.json(data[0].cnt);
+};
+export const getLikeCnt = async (req, res) => {
+  const { postId } = req.query;
+  const { data } = await connection("post", "getLikeCnt", {
+    postId: postId,
+  });
+  res.json(data[0].cnt);
+};
