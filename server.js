@@ -16,6 +16,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/test", (req, res) => {
+  res.json("hello");
+});
 router.use("/api", jwtAuthentication);
 
 app.use(router);
@@ -23,6 +26,6 @@ app.use("/nonAuth", controller.nonAuthRouter);
 app.use("/api/user", controller.userRouter);
 app.use("/api/post", controller.postRouter);
 
-app.use("/static", express.static("uploads"));
+app.use("/resource", express.static("uploads"));
 app.use("/profile", express.static("profileImg"));
-app.listen(8080);
+app.listen(3000);
